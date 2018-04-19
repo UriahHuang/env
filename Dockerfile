@@ -1,0 +1,60 @@
+
+FROM tensorflow/tensorflow:1.7.0-devel-py3
+# tags like:
+#   1.7.0-devel-gpu-py3
+#   1.7.0-devel-py3
+EXPOSE 8888 8887 8886
+
+### create user jason
+RUN useradd --create-home --shell /bin/bash jason
+
+### usefule tools
+RUN apt-get update && apt-get install -y \
+git wget tmux vim build-essential cmake
+# may need python-dev python3-dev for installing youcompleteme, 1.7.0-rc1-devel-py3 already has
+
+### pretty vim
+#COPY ~/.vimrc ~
+RUN git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime && \
+sh ~/.vim_runtime/install_awesome_vimrc.sh
+
+### install Vundle
+RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+# prepare .vundle_vimrc yourself
+COPY vundle_vimrc .
+RUN echo "$(cat ~/vundle_vimrc)\n$(cat ~/.vimrc)" > ~/.vimrc
+
+### pretty tmux
+RUN git clone https://github.com/gpakosz/.tmux.git ~/.tmux && \
+cp ~/.tmux/.tmux.conf .
+RUN echo "export TERM=xterm-256color" >> ~/.bashrc && \
+echo "export EDITOR=vim" >> ~/.bashrc
+
+### copy setting to jason
+RUN cp -r /root/. /home/jason && \
+chown -R jason /home/jason
+
+### python packages to install
+RUN pip install --upgrade pip && \
+pip install gym flake8
+
+### other packages to install
+RUN apt-get install -y python-opengl
+
+### switch user inside container
+# su jason && cd
+
+### other installation inside container
+# install Valloric/YouCompleteMe with vundle, then
+#   cd ~/.vim/bundle/YouCompleteMe && ./install.py
+# install vim-syntastic/syntastic with vundle, use flake8 for python checker with args
+#   let g:syntastic_python_checkers = ['flake8']
+#   let g:syntastic_python_flake8_args = '--ignore W,E'
+
+# if you need default user to be jason, use this
+# better figure out how to grant jason root permisssion
+#USER jason
+#WORKDIR /home/jason
+
+CMD ["/bin/bash"]
+
