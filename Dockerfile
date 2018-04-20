@@ -41,7 +41,7 @@ RUN cd ~/.vim/bundle/YouCompleteMe && ./install.py && cd -
 # install vim-syntastic/syntastic with vundle, use flake8 for python checker with args
 #   execute pathogen#infect()
 #   let g:syntastic_python_checkers = ['flake8']
-#   let g:syntastic_python_flake8_args = '--ignore W,E'
+#   let g:syntastic_python_flake8_args = '--ignore W,E --select F,E999'
 RUN echo "let g:ale_emit_conflict_warnings = 0" >> ~/.vimrc && \
 echo "execute pathogen#infect()\n" >> ~/.vimrc
 
