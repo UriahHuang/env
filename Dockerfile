@@ -60,6 +60,12 @@ echo "lg3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue
 #    }
 #   \[\033[01;31m\]$(parse_git_branch)
 
+### tmux utility
+# make tmux color when launch session
+#   case "$TERM" in
+#       xterm-color|*-256color) color_prompt=yes;;
+#   esac
+
 ### copy setting to jason
 RUN cp -r /root/. /home/jason && \
 chown -R jason /home/jason
