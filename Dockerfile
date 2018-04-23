@@ -66,6 +66,11 @@ echo "lg3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue
 #       xterm-color|*-256color) color_prompt=yes;;
 #   esac
 
+### bash utilities
+# history search with prefix
+RUN echo "\e[A":history-search-backward >> ~/.inputrc && \
+echo "\e[B":history-search-forward >> ~/.inputrc
+
 ### copy setting to jason
 RUN cp -r /root/. /home/jason && \
 chown -R jason /home/jason
