@@ -17,7 +17,6 @@ RUN pip install --upgrade pip && \
 pip install gym flake8
 
 ### pretty vim
-#COPY ~/.vimrc ~
 RUN git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime && \
 sh ~/.vim_runtime/install_awesome_vimrc.sh
 
@@ -36,14 +35,12 @@ RUN echo "$(cat ~/base_vimrc)\n$(cat ~/.vimrc)" > ~/.vimrc
 ### other installation inside container
 RUN vim -c 'PluginInstall' -c 'qa!'
 # install Valloric/YouCompleteMe with vundle, then
-#   cd ~/.vim/bundle/YouCompleteMe && ./install.py
 RUN cd ~/.vim/bundle/YouCompleteMe && ./install.py && cd -
 # install vim-syntastic/syntastic with vundle, use flake8 for python checker with args
-#   execute pathogen#infect()
-#   let g:syntastic_python_checkers = ['flake8']
-#   let g:syntastic_python_flake8_args = '--ignore W,E --select F,E999'
 RUN echo "let g:ale_emit_conflict_warnings = 0" >> ~/.vimrc && \
-echo "execute pathogen#infect()\n" >> ~/.vimrc
+echo "execute pathogen#infect()\n" >> ~/.vimrc && \
+echo "let g:syntastic_python_checkers = ['flake8']" >> ~/.vimrc && \
+echo "let g:syntastic_python_flake8_args = '--ignore W,E --select F,E999'" >> ~/.vimrc
 
 ### git utilities
 # pretty git graph plot
@@ -58,7 +55,7 @@ echo "lg3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue
 #    parse_git_branch() {
 #      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 #    }
-#   \[\033[01;31m\]$(parse_git_branch)
+#   PS1 add \[\033[01;31m\]$(parse_git_branch)
 
 ### tmux utility
 # make tmux color when launch session
