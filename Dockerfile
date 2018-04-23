@@ -68,8 +68,9 @@ echo "lg3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue
 
 ### bash utilities
 # history search with prefix
-RUN echo "\e[A":history-search-backward >> ~/.inputrc && \
-echo "\e[B":history-search-forward >> ~/.inputrc
+RUN echo '"\e[A":history-search-backward' >> ~/.inputrc && \
+echo '"\e[B":history-search-forward' >> ~/.inputrc && \
+echo "set completion-ignore-case On" >> ~/.inputrc
 
 ### copy setting to jason
 RUN cp -r /root/. /home/jason && \
