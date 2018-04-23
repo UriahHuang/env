@@ -45,6 +45,17 @@ RUN cd ~/.vim/bundle/YouCompleteMe && ./install.py && cd -
 RUN echo "let g:ale_emit_conflict_warnings = 0" >> ~/.vimrc && \
 echo "execute pathogen#infect()\n" >> ~/.vimrc
 
+### git utilities
+# pretty git graph plot
+RUN echo "[alias]" >> ~/.gitconfig \
+echo "lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all" >> ~/.gitconfig \
+echo "lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all" >> ~/.gitconfig
+# bash show git branch, add to .bashrc
+#    parse_git_branch() {
+#      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+#    }
+#   \[\033[01;31m\]$(parse_git_branch)
+
 ### copy setting to jason
 RUN cp -r /root/. /home/jason && \
 chown -R jason /home/jason
