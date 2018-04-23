@@ -29,9 +29,9 @@ echo "export EDITOR=vim" >> ~/.bashrc
 
 ### install Vundle
 RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-# prepare .vundle_vimrc yourself
-COPY vundle_vimrc .
-RUN echo "$(cat ~/vundle_vimrc)\n$(cat ~/.vimrc)" > ~/.vimrc
+# prepare .base_vimrc yourself
+COPY base_vimrc .
+RUN echo "$(cat ~/base_vimrc)\n$(cat ~/.vimrc)" > ~/.vimrc
 
 ### other installation inside container
 RUN vim -c 'PluginInstall' -c 'qa!'
