@@ -25,6 +25,8 @@ RUN git clone https://github.com/gpakosz/.tmux.git ~/.tmux && \
 cp ~/.tmux/.tmux.conf .
 RUN echo "export TERM=xterm-256color" >> ~/.bashrc && \
 echo "export EDITOR=vim" >> ~/.bashrc
+# may need ln -s .bashrc .bash_profile, since tmux default will not check .bashrc
+# see https://unix.stackexchange.com/questions/320465/new-tmux-sessions-do-not-source-bashrc-file
 
 ### install Vundle
 RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
