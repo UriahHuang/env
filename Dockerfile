@@ -36,7 +36,9 @@ RUN echo "$(cat ~/base_vimrc)\n$(cat ~/.vimrc)" > ~/.vimrc
 
 ### other installation inside container
 RUN vim -c 'PluginInstall' -c 'qa!'
-# install Valloric/YouCompleteMe with vundle, then
+# install Valloric/YouCompleteMe with vundle
+# for issue "YouCompleteMe unavailable: requires Vim compiled with Python ", install vim-nox,
+# and sudo mv /usr/bin/vim /usr/bin/vim.old && sudo ln -s /usr/bin/vim.nox /usr/bin/vim
 RUN cd ~/.vim/bundle/YouCompleteMe && ./install.py && cd -
 # install vim-syntastic/syntastic with vundle, use flake8 for python checker with args
 RUN echo "let g:ale_emit_conflict_warnings = 0" >> ~/.vimrc && \
