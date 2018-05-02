@@ -32,7 +32,7 @@ echo "export EDITOR=vim" >> ~/.bashrc
 RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 # prepare .base_vimrc yourself
 COPY base_vimrc .
-RUN echo "$(cat ~/base_vimrc)\n$(cat ~/.vimrc)" > ~/.vimrc
+RUN echo "$(cat ~/base_vimrc)\n$(cat ~/.vimrc)" > ~/.vimrc && rm ~/base_vimrc
 
 ### other installation inside container
 RUN vim -c 'PluginInstall' -c 'qa!'
@@ -41,10 +41,18 @@ RUN vim -c 'PluginInstall' -c 'qa!'
 # and sudo mv /usr/bin/vim /usr/bin/vim.old && sudo ln -s /usr/bin/vim.nox /usr/bin/vim
 RUN cd ~/.vim/bundle/YouCompleteMe && ./install.py && cd -
 # install vim-syntastic/syntastic with vundle, use flake8 for python checker with args
-RUN echo "let g:ale_emit_conflict_warnings = 0" >> ~/.vimrc && \
+RUN echo "\"syntastic setting\"" >> ~/.vimrc && \
+echo "let g:ale_emit_conflict_warnings = 0" >> ~/.vimrc && \
 echo "execute pathogen#infect()\n" >> ~/.vimrc && \
+echo "set statusline+=%#warningmsg#" >> ~/.vimrc && \
+echo "set statusline+=%{SyntasticStatuslineFlag()}" >> ~/.vimrc && \
+echo "set statusline+=%*" >> ~/.vimrc && \
 echo "let g:syntastic_python_checkers = ['flake8']" >> ~/.vimrc && \
-echo "let g:syntastic_python_flake8_args = '--ignore W,E --select F,E999'" >> ~/.vimrc
+echo "let g:syntastic_python_flake8_args = '--ignore W,E --select F,E999'" >> ~/.vimrc && \
+echo "let g:syntastic_always_populate_loc_list = 1" >> ~/.vimrc && \
+echo "let g:syntastic_auto_loc_list = 1" >> ~/.vimrc && \
+echo "let g:syntastic_check_on_open = 1" >> ~/.vimrc && \
+echo "let g:syntastic_check_on_wq = 0" >> ~/.vimrc
 
 ### git utilities
 # pretty git graph plot
