@@ -9,7 +9,7 @@ RUN useradd --create-home --shell /bin/bash jason
 
 ### usefule tools
 RUN apt-get update && apt-get install -y \
-git wget tmux vim build-essential cmake
+git wget tmux vim build-essential cmake ack-grep htop
 # may need python-dev python3-dev for installing youcompleteme, 1.7.0-rc1-devel-py3 already has
 
 ### python packages to install
