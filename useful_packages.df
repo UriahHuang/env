@@ -1,7 +1,13 @@
+### base images
+## from tensorflow repo
 FROM tensorflow/tensorflow:1.7.0-devel-py3
 # tags like:
 #   1.7.0-devel-gpu-py3
 #   1.7.0-devel-py3
+## from ubuntu
+FROM ubuntu_tf:v1
+
+### expose port
 EXPOSE 8888 8887 8886
 
 ### create user jason
@@ -13,8 +19,11 @@ git wget tmux vim build-essential cmake ack-grep htop
 # may need python-dev python3-dev for installing youcompleteme, 1.7.0-rc1-devel-py3 already has
 
 ### python packages to install
-RUN pip install --upgrade pip && \
+RUN pip3 install --upgrade pip && \
 pip install gym flake8
+
+### set home dir to install
+WORKDIR /root
 
 ### pretty vim
 RUN git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime && \
@@ -36,11 +45,11 @@ RUN echo "$(cat ~/base_vimrc)\n$(cat ~/.vimrc)" > ~/.vimrc && rm ~/base_vimrc
 
 ### other installation inside container
 RUN vim -c 'PluginInstall' -c 'qa!'
-# install Valloric/YouCompleteMe with vundle
+## install Valloric/YouCompleteMe with vundle
 # for issue "YouCompleteMe unavailable: requires Vim compiled with Python ", install vim-nox,
 # and sudo mv /usr/bin/vim /usr/bin/vim.old && sudo ln -s /usr/bin/vim.nox /usr/bin/vim
 RUN cd ~/.vim/bundle/YouCompleteMe && ./install.py && cd -
-# install vim-syntastic/syntastic with vundle, use flake8 for python checker with args
+## install vim-syntastic/syntastic with vundle, use flake8 for python checker with args
 RUN echo "\"syntastic setting\"" >> ~/.vimrc && \
 echo "let g:ale_emit_conflict_warnings = 0" >> ~/.vimrc && \
 echo "execute pathogen#infect()\n" >> ~/.vimrc && \
