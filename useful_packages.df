@@ -1,6 +1,6 @@
 ### base images
 ## from tensorflow repo
-FROM tensorflow/tensorflow:1.7.0-devel-py3
+#FROM tensorflow/tensorflow:1.7.0-devel-py3
 # tags like:
 #   1.7.0-devel-gpu-py3
 #   1.7.0-devel-py3
@@ -48,20 +48,26 @@ RUN vim -c 'PluginInstall' -c 'qa!'
 ## install Valloric/YouCompleteMe with vundle
 # for issue "YouCompleteMe unavailable: requires Vim compiled with Python ", install vim-nox,
 # and sudo mv /usr/bin/vim /usr/bin/vim.old && sudo ln -s /usr/bin/vim.nox /usr/bin/vim
-RUN cd ~/.vim/bundle/YouCompleteMe && ./install.py && cd -
+RUN cd ~/.vim/bundle/YouCompleteMe && python3 install.py && cd -
+## install vim8 for ale
+RUN apt-get update && \
+apt-get install -y software-properties-common && \
+add-apt-repository -y ppa:jonathonf/vim && \
+apt update && \
+apt install -y vim
 ## install vim-syntastic/syntastic with vundle, use flake8 for python checker with args
-RUN echo "\"syntastic setting\"" >> ~/.vimrc && \
-echo "let g:ale_emit_conflict_warnings = 0" >> ~/.vimrc && \
-echo "execute pathogen#infect()\n" >> ~/.vimrc && \
-echo "set statusline+=%#warningmsg#" >> ~/.vimrc && \
-echo "set statusline+=%{SyntasticStatuslineFlag()}" >> ~/.vimrc && \
-echo "set statusline+=%*" >> ~/.vimrc && \
-echo "let g:syntastic_python_checkers = ['flake8']" >> ~/.vimrc && \
-echo "let g:syntastic_python_flake8_args = '--ignore W,E --select F,E999'" >> ~/.vimrc && \
-echo "let g:syntastic_always_populate_loc_list = 1" >> ~/.vimrc && \
-echo "let g:syntastic_auto_loc_list = 1" >> ~/.vimrc && \
-echo "let g:syntastic_check_on_open = 1" >> ~/.vimrc && \
-echo "let g:syntastic_check_on_wq = 0" >> ~/.vimrc
+#RUN echo "\"syntastic setting\"" >> ~/.vimrc && \
+#echo "let g:ale_emit_conflict_warnings = 0" >> ~/.vimrc && \
+#echo "execute pathogen#infect()\n" >> ~/.vimrc && \
+#echo "set statusline+=%#warningmsg#" >> ~/.vimrc && \
+#echo "set statusline+=%{SyntasticStatuslineFlag()}" >> ~/.vimrc && \
+#echo "set statusline+=%*" >> ~/.vimrc && \
+#echo "let g:syntastic_python_checkers = ['flake8']" >> ~/.vimrc && \
+#echo "let g:syntastic_python_flake8_args = '--ignore W,E --select F,E999'" >> ~/.vimrc && \
+#echo "let g:syntastic_always_populate_loc_list = 1" >> ~/.vimrc && \
+#echo "let g:syntastic_auto_loc_list = 1" >> ~/.vimrc && \
+#echo "let g:syntastic_check_on_open = 1" >> ~/.vimrc && \
+#echo "let g:syntastic_check_on_wq = 0" >> ~/.vimrc
 
 ### git utilities
 # pretty git graph plot
@@ -89,6 +95,11 @@ echo "lg3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue
 RUN echo '"\e[A":history-search-backward' >> ~/.inputrc && \
 echo '"\e[B":history-search-forward' >> ~/.inputrc && \
 echo "set completion-ignore-case On" >> ~/.inputrc
+
+### others
+# awesom_vim_custom
+RUN sed -i 's/map <space>/\"map <space>/' .vim_runtime/vimrcs/basic.vim && \
+sed -i 's/map <c-space>/\"map <c-space>/' .vim_runtime/vimrcs/basic.vim
 
 ### copy setting to jason
 RUN cp -r /root/. /home/jason && \
