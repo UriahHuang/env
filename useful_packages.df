@@ -63,6 +63,11 @@ echo "let g:syntastic_auto_loc_list = 1" >> ~/.vimrc && \
 echo "let g:syntastic_check_on_open = 1" >> ~/.vimrc && \
 echo "let g:syntastic_check_on_wq = 0" >> ~/.vimrc
 
+## vim ale
+echo "let g:ale_python_flake8_args = '--ignore=E,W --select=F,E999'" >> ~/.vimrc && \
+echo "nmap <silent> <F1> :ALENextWrap<cr>" >> ~/.vimrc && \
+echo "nmap <silent> <F2> :ALEPreviousWrap<cr>"
+
 ### git utilities
 # pretty git graph plot
 RUN echo "[user]" >> ~/.gitconfig && \
