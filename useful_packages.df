@@ -94,16 +94,23 @@ chown -R jason /home/jason
 # su jason && cd
 
 ### manual setting inside container
-# bash show git branch & bash show color
-#
-#   parse_git_branch() {
-#     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-#   }
-#  PS1 add \[\033[01;31m\]$(parse_git_branch)
-#
-#  case "$TERM" in
-#      xterm-color|*-256color) color_prompt=yes;;
-#  esac
+
+## bash show git branch
+#parse_git_branch() {
+#   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+#}
+#PS1 add \[\033[01;31m\]$(parse_git_branch)
+
+## bash color
+#case "$TERM" in
+#    xterm-color|*-256color) color_prompt=yes;;
+#esac
+
+## tmux don't bind second key, edit ~/.tmux.conf
+#set -g prefix C-a
+#bind C-a send-prefix
+#unbind-key C-b
+
 
 ### other notes
 # if you need default user to be jason, use this
