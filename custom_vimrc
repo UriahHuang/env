@@ -1,0 +1,3 @@
+""" auto pair
+let g:AutoPairsShortcutFastWrap = '<C-e>'
+

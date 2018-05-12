@@ -31,7 +31,7 @@ sh ~/.vim_runtime/install_awesome_vimrc.sh
 
 ### pretty tmux
 #RUN git clone https://github.com/gpakosz/.tmux.git ~/.tmux
-COPY base_tmux_conf .tmux.conf
+COPY custom_tmux_conf .tmux.conf
 RUN echo "export TERM=xterm-256color" >> ~/.bashrc && \
 echo "export EDITOR=vim" >> ~/.bashrc
 # may need ln -s .bashrc .bash_profile, since tmux default will not check .bashrc
@@ -39,9 +39,9 @@ echo "export EDITOR=vim" >> ~/.bashrc
 
 ### install Vundle
 RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-# prepare .base_vimrc yourself
-COPY base_vimrc .
-RUN echo "$(cat ~/base_vimrc)\n$(cat ~/.vimrc)" > ~/.vimrc && rm ~/base_vimrc
+# prepare .vundle_vimrc yourself
+COPY vundle_vimrc .
+RUN echo "$(cat ~/vundle_vimrc)\n$(cat ~/.vimrc)" > ~/.vimrc && rm ~/vundle_vimrc
 
 ### other installation inside container
 RUN vim -c 'PluginInstall' -c 'qa!'
@@ -56,14 +56,11 @@ add-apt-repository -y ppa:jonathonf/vim && \
 apt update && \
 apt install -y vim
 
-## vim ale
-RUN echo "let g:ale_python_flake8_args = '--ignore=E,W --select=F,E999'" >> ~/.vim_runtime/my_configs.vim && \
-echo "let b:ale_fixers = {'python':['autopep8']}" >> ~/.vim_runtime/my_configs.vim && \
-echo "let g:ale_fix_on_save = 1" >> ~/.vim_runtime/my_configs.vim
-#echo "nmap <silent> <F1> :ALENextWrap<cr>" >> ~/.vim_runtime/my_configs.vim && \
-#echo "nmap <silent> <F2> :ALEPreviousWrap<cr>"  >> ~/.vim_runtime/my_configs.vim && \
-## vim auto pair
-let g:AutoPairsShortcutFastWrap = '<C-e>' >> ~/.vimrc
+## awesome vimrc custom
+COPY my_configs.vim ~/.vim_runtime/
+## other vimrc custom
+COPY custom_vimrc .
+RUN echo "$(cat ~/custom_vimrc)" >> ~/.vimrc && rm ~/custom_vimrc
 
 ### git utilities
 # pretty git graph plot
@@ -80,11 +77,6 @@ echo "lg3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue
 RUN echo '"\e[A":history-search-backward' >> ~/.inputrc && \
 echo '"\e[B":history-search-forward' >> ~/.inputrc && \
 echo "set completion-ignore-case On" >> ~/.inputrc
-
-### others
-# awesom_vim_custom
-RUN sed -i 's/map <space>/\"map <space>/' .vim_runtime/vimrcs/basic.vim && \
-sed -i 's/map <c-space>/\"map <c-space>/' .vim_runtime/vimrcs/basic.vim
 
 ### copy setting to jason
 RUN cp -r /root/. /home/jason && \
