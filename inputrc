@@ -1,0 +1,6 @@
+# history search with prefix
+"\e[A":history-search-backward
+"\e[B":history-search-forward
+
+# auto-complete ignore case
+set completion-ignore-case On
