@@ -66,7 +66,9 @@ echo "let g:syntastic_check_on_wq = 0" >> ~/.vimrc
 ## vim ale
 RUN echo "let g:ale_python_flake8_args = '--ignore=E,W --select=F,E999'" >> ~/.vimrc && \
 echo "nmap <silent> <F1> :ALENextWrap<cr>" >> ~/.vimrc && \
-echo "nmap <silent> <F2> :ALEPreviousWrap<cr>"
+echo "nmap <silent> <F2> :ALEPreviousWrap<cr>"  >> ~/.vimrc && \
+echo "let b:ale_fixers = {'python':['autopep8']}" >> ~/.vimrc
+echo "let g:ale_fix_on_save = 1" >> ~/.vimrc
 
 ### git utilities
 # pretty git graph plot
