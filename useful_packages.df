@@ -112,7 +112,9 @@ chown -R jason /home/jason
 #unbind-key C-b
 
 ## tmux don't bind -r to pane switch
-## tmux bind last-pane
+## tmux bind last-window, last-pane
+#bind n last-window
+#bind / last-pane
 
 ### other notes
 # if you need default user to be jason, use this
