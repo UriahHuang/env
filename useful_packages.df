@@ -21,7 +21,7 @@ RUN useradd --create-home --shell /bin/bash jason
 
 ### usefule tools
 RUN apt-get update && apt-get install -y \
-git wget tmux vim build-essential cmake ack-grep htop python3-dev
+git wget vim build-essential cmake ack-grep htop python3-dev
 
 ### python packages to install
 RUN pip3 install --upgrade pip && \
@@ -55,19 +55,26 @@ COPY custom_vimrc .
 RUN echo "$(cat ~/custom_vimrc)" >> ~/.vimrc && rm ~/custom_vimrc
 
 ### pretty tmux
-#RUN git clone https://github.com/gpakosz/.tmux.git ~/.tmux
-COPY custom_tmux_conf .tmux.conf
+RUN cd && \
+git clone https://github.com/gpakosz/.tmux.git && \
+ln -s -f .tmux/.tmux.conf && \
+cp .tmux/.tmux.conf.local . && \
+cd -
+COPY custom_tmux_conf ./.tmux.conf
 RUN echo "export TERM=xterm-256color" >> ~/.bashrc && \
 echo "export EDITOR=vim" >> ~/.bashrc
+# tmux show git branch
+RUN git clone https://github.com/aurelien-rainone/tmux-gitbar.git ~/.tmux-gitbar && \
+echo source-file "$HOME/.tmux-gitbar/tmux-gitbar.tmux" >> .tmux.conf.local
 # may need ln -s .bashrc .bash_profile, since tmux default will not check .bashrc
 # see https://unix.stackexchange.com/questions/320465/new-tmux-sessions-do-not-source-bashrc-file
 
 ### git settgin
-COPY gitconfig ~/.gitconfig
+COPY gitconfig ./.gitconfig
 
 ### bash setting
 # history search with prefix
-COPY inputrc ~/.inputrc
+COPY inputrc ./.inputrc
 
 ### copy setting to jason
 RUN cp -r /root/. /home/jason && \
