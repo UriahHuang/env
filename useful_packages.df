@@ -20,7 +20,7 @@ git wget tmux vim build-essential cmake ack-grep htop
 
 ### python packages to install
 RUN pip3 install --upgrade pip && \
-pip install gym flake8
+pip install gym flake8 autopep8
 
 ### set home dir to install
 WORKDIR /root
