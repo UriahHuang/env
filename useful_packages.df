@@ -111,6 +111,8 @@ chown -R jason /home/jason
 #bind C-a send-prefix
 #unbind-key C-b
 
+## tmux don't bind -r to pane switch
+## tmux bind last-pane
 
 ### other notes
 # if you need default user to be jason, use this
