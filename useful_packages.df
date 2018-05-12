@@ -30,8 +30,8 @@ RUN git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime && \
 sh ~/.vim_runtime/install_awesome_vimrc.sh
 
 ### pretty tmux
-RUN git clone https://github.com/gpakosz/.tmux.git ~/.tmux && \
-cp ~/.tmux/.tmux.conf .
+#RUN git clone https://github.com/gpakosz/.tmux.git ~/.tmux
+COPY base_tmux_conf .tmux.conf
 RUN echo "export TERM=xterm-256color" >> ~/.bashrc && \
 echo "export EDITOR=vim" >> ~/.bashrc
 # may need ln -s .bashrc .bash_profile, since tmux default will not check .bashrc
@@ -105,12 +105,6 @@ chown -R jason /home/jason
 #case "$TERM" in
 #    xterm-color|*-256color) color_prompt=yes;;
 #esac
-
-## tmux don't bind second key, edit ~/.tmux.conf
-#set -g prefix C-a
-#bind C-a send-prefix
-#unbind-key C-b
-
 
 ### other notes
 # if you need default user to be jason, use this
