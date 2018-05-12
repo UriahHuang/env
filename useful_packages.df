@@ -57,11 +57,11 @@ apt update && \
 apt install -y vim
 
 ## vim ale
-RUN echo "let g:ale_python_flake8_args = '--ignore=E,W --select=F,E999'" >> ~/.vimrc && \
-echo "nmap <silent> <F1> :ALENextWrap<cr>" >> ~/.vimrc && \
-echo "nmap <silent> <F2> :ALEPreviousWrap<cr>"  >> ~/.vimrc && \
-echo "let b:ale_fixers = {'python':['autopep8']}" >> ~/.vimrc
-echo "let g:ale_fix_on_save = 1" >> ~/.vimrc
+RUN echo "let g:ale_python_flake8_args = '--ignore=E,W --select=F,E999'" >> ~/.vim_runtime/my_configs.vim && \
+echo "nmap <silent> <F1> :ALENextWrap<cr>" >> ~/.vim_runtime/my_configs.vim && \
+echo "nmap <silent> <F2> :ALEPreviousWrap<cr>"  >> ~/.vim_runtime/my_configs.vim && \
+echo "let b:ale_fixers = {'python':['autopep8']}" >> ~/.vim_runtime/my_configs.vim && \
+echo "let g:ale_fix_on_save = 1" >> ~/.vim_runtime/my_configs.vim
 
 ### git utilities
 # pretty git graph plot
