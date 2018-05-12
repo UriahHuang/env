@@ -55,19 +55,6 @@ apt-get install -y software-properties-common && \
 add-apt-repository -y ppa:jonathonf/vim && \
 apt update && \
 apt install -y vim
-## install vim-syntastic/syntastic with vundle, use flake8 for python checker with args
-#RUN echo "\"syntastic setting\"" >> ~/.vimrc && \
-#echo "let g:ale_emit_conflict_warnings = 0" >> ~/.vimrc && \
-#echo "execute pathogen#infect()\n" >> ~/.vimrc && \
-#echo "set statusline+=%#warningmsg#" >> ~/.vimrc && \
-#echo "set statusline+=%{SyntasticStatuslineFlag()}" >> ~/.vimrc && \
-#echo "set statusline+=%*" >> ~/.vimrc && \
-#echo "let g:syntastic_python_checkers = ['flake8']" >> ~/.vimrc && \
-#echo "let g:syntastic_python_flake8_args = '--ignore W,E --select F,E999'" >> ~/.vimrc && \
-#echo "let g:syntastic_always_populate_loc_list = 1" >> ~/.vimrc && \
-#echo "let g:syntastic_auto_loc_list = 1" >> ~/.vimrc && \
-#echo "let g:syntastic_check_on_open = 1" >> ~/.vimrc && \
-#echo "let g:syntastic_check_on_wq = 0" >> ~/.vimrc
 
 ## vim ale
 RUN echo "let g:ale_python_flake8_args = '--ignore=E,W --select=F,E999'" >> ~/.vimrc && \
@@ -85,17 +72,6 @@ RUN echo "[alias]" >> ~/.gitconfig && \
 echo "lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all" >> ~/.gitconfig && \
 echo "lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all" >> ~/.gitconfig && \
 echo "lg3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)' --all" >> ~/.gitconfig
-# bash show git branch, add to .bashrc
-#    parse_git_branch() {
-#      git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-#    }
-#   PS1 add \[\033[01;31m\]$(parse_git_branch)
-
-### tmux utility
-# make tmux color when launch session
-#   case "$TERM" in
-#       xterm-color|*-256color) color_prompt=yes;;
-#   esac
 
 ### bash utilities
 # history search with prefix
@@ -114,6 +90,18 @@ chown -R jason /home/jason
 
 ### switch user inside container
 # su jason && cd
+
+### manual setting inside container
+# bash show git branch & bash show color
+#
+#   parse_git_branch() {
+#     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+#   }
+#  PS1 add \[\033[01;31m\]$(parse_git_branch)
+#
+#  case "$TERM" in
+#      xterm-color|*-256color) color_prompt=yes;;
+#  esac
 
 ### other notes
 # if you need default user to be jason, use this
