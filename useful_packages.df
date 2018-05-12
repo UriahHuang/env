@@ -40,7 +40,10 @@ RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.v
 echo "$(cat ~/vundle_vimrc)\n$(cat ~/.vimrc)" > ~/.vimrc && rm ~/vundle_vimrc && \
 vim -c 'PluginInstall' -c 'qa!'
 # install youcompleteme
-RUN cd ~/.vim/bundle/YouCompleteMe && python3 install.py && cd -
+RUN cd ~/.vim/bundle/YouCompleteMe && \
+git submodule update --init --recursive && \
+python3 install.py && \
+cd -
 
 ### pretty vim
 RUN git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime && \
