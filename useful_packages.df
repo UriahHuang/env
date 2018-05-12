@@ -21,11 +21,19 @@ RUN useradd --create-home --shell /bin/bash jason
 
 ### usefule tools
 RUN apt-get update && apt-get install -y \
-git wget vim build-essential cmake ack-grep htop python3-dev
+git wget tmux vim build-essential cmake ack-grep htop python3-dev
 
 ### python packages to install
 RUN pip3 install --upgrade pip && \
 pip install gym flake8 autopep8
+
+### awesome vim
+RUN git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime && \
+sh ~/.vim_runtime/install_awesome_vimrc.sh
+
+### tmux requirements
+RUN echo "export TERM=xterm-256color" >> ~/.bashrc && \
+echo "export EDITOR=vim" >> ~/.bashrc
 
 ## install vim8 for ale
 RUN apt-get update && \
@@ -35,7 +43,7 @@ apt update && \
 apt install -y vim
 
 ### install Vundle
-COPY vundle_vimrc .
+COPY vundle_vimrc ./vundle_vimrc
 RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && \
 echo "$(cat ~/vundle_vimrc)\n$(cat ~/.vimrc)" > ~/.vimrc && rm ~/vundle_vimrc && \
 vim -c 'PluginInstall' -c 'qa!'
@@ -45,24 +53,19 @@ git submodule update --init --recursive && \
 python3 install.py && \
 cd -
 
-### pretty vim
-RUN git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime && \
-sh ~/.vim_runtime/install_awesome_vimrc.sh
 ## awesome vimrc custom
-COPY my_configs.vim ~/.vim_runtime/
+COPY my_configs.vim ./.vim_runtime/
 ## other vimrc custom
-COPY custom_vimrc .
+COPY custom_vimrc ./custom_vimrc
 RUN echo "$(cat ~/custom_vimrc)" >> ~/.vimrc && rm ~/custom_vimrc
 
-### pretty tmux
+###  tmux custom
 RUN cd && \
 git clone https://github.com/gpakosz/.tmux.git && \
 ln -s -f .tmux/.tmux.conf && \
 cp .tmux/.tmux.conf.local . && \
 cd -
 COPY custom_tmux_conf ./.tmux.conf
-RUN echo "export TERM=xterm-256color" >> ~/.bashrc && \
-echo "export EDITOR=vim" >> ~/.bashrc
 # tmux show git branch
 RUN git clone https://github.com/aurelien-rainone/tmux-gitbar.git ~/.tmux-gitbar && \
 echo source-file "$HOME/.tmux-gitbar/tmux-gitbar.tmux" >> .tmux.conf.local
@@ -83,12 +86,6 @@ chown -R jason /home/jason
 ### manual setting inside container
 ## switch user inside container
 # su jason && cd
-
-## bash show git branch
-#parse_git_branch() {
-#   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-#}
-#PS1 add \[\033[01;31m\]$(parse_git_branch)
 
 ## bash color
 #case "$TERM" in
