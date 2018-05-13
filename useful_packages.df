@@ -78,6 +78,8 @@ COPY gitconfig ./.gitconfig
 ### bash setting
 # history search with prefix
 COPY inputrc ./.inputrc
+RUN echo "#bash don't lock screen with control-s" >> ~/.bashrc && \
+echo "stty -ixon" >> ~/.bashrc
 
 ### copy setting to jason
 RUN cp -r /root/. /home/jason && \
