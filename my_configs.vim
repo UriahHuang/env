@@ -22,3 +22,19 @@ inoremap $3 {<cr><esc>o}<up><left><tab><esc>$a
 inoremap $q '<cr><esc>o'<up><left><tab><esc>$a
 inoremap $$ "<cr><esc>o"<up><left><tab><esc>$a
 
+""" insert mode common operation
+" delete word/WORD/end left/right
+inoremap a<left> <esc><right>dbi
+inoremap q<left> <esc><right>dBi
+inoremap d<left> <esc><right>d^i
+inoremap a<right> <esc><right>dei
+inoremap q<right> <esc><right>dEi
+inoremap d<right> <esc><right>d$a
+" move word/WORD/end left/right
+inoremap s<left> <esc>bi
+inoremap w<left> <esc>Bi
+inoremap f<left> <esc>^i
+inoremap s<right> <esc>ea
+inoremap w<right> <esc>Ea
+inoremap f<right> <esc>$a
+
