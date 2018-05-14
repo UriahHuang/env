@@ -17,7 +17,7 @@ CMD ["/bin/bash"]
 WORKDIR /root
 
 ### create user jason
-RUN useradd --create-home --shell /bin/bash jason
+RUN useradd --create-home -u 1003 -U --shell /bin/bash jason
 
 ### usefule tools
 RUN apt-get update && apt-get install -y \

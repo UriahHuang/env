@@ -2,6 +2,10 @@
 unmap <space>
 unmap <c-space>
 
+""" map l, L to next, previous buffer
+unmap <leader>h
+nmap <leader>L :bp<cr>
+
 """ ale
 let g:ale_python_flake8_args = '--ignore=E,W --select=F,E999'
 "nmap <silent> <F1> :ALENextWrap<cr>
