@@ -62,13 +62,9 @@ RUN echo "$(cat ~/custom_vimrc)" >> ~/.vimrc && rm ~/custom_vimrc
 ###  tmux custom
 RUN cd && \
 git clone https://github.com/gpakosz/.tmux.git && \
-ln -s -f .tmux/.tmux.conf && \
 cp .tmux/.tmux.conf.local . && \
 cd -
 COPY custom_tmux_conf ./.tmux.conf
-# tmux show git branch
-RUN git clone https://github.com/aurelien-rainone/tmux-gitbar.git ~/.tmux-gitbar && \
-echo source-file "$HOME/.tmux-gitbar/tmux-gitbar.tmux" >> .tmux.conf.local
 # may need ln -s .bashrc .bash_profile, since tmux default will not check .bashrc
 # see https://unix.stackexchange.com/questions/320465/new-tmux-sessions-do-not-source-bashrc-file
 
