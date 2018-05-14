@@ -1,8 +1,8 @@
 ### base image, cuda or not
 # cpu
-FROM ubuntu:16.04
+#FROM ubuntu:16.04
 # gpu
-#FROM nvidia/cuda:9.1-cudnn7-runtime-ubuntu16.04
+FROM nvidia/cuda:9.0-cudnn7-runtime-ubuntu16.04
 #https://hub.docker.com/r/nvidia/cuda/ 
 
 ### install tensorflow dependencies
@@ -17,6 +17,6 @@ apt-get install -y python3-pip python3-dev
 
 ### install tensorflow
 RUN \
-pip3 install tensorflow
-# tensorflow or tensorflow-gpu
+pip3 install tensorflow-gpu==1.5.0
+# tensorflow or tensorflow-gpu==1.5.0
 
