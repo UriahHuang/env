@@ -8,6 +8,7 @@ nmap <leader>L :bp<cr>
 
 """ ale
 let g:ale_python_flake8_options = '--ignore=E,W --select=F,E999'
+let g:ale_lint_on_text_changed = 1
 "nmap <silent> <F1> :ALENextWrap<cr>
 "nmap <silent> <F2> :ALEPreviousWrap<cr>
 let b:ale_fixers = {
