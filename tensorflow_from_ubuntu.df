@@ -17,6 +17,6 @@ apt-get install -y python3-pip python3-dev
 
 ### install tensorflow
 RUN \
-pip3 install tensorflow-gpu==1.5.0
+pip3 install tensorflow-gpu==1.10.0rc1
 # tensorflow or tensorflow-gpu==1.5.0
 

@@ -1,11 +1,11 @@
 ### base images
 ## from tensorflow repo
-#FROM tensorflow/tensorflow:1.7.0-devel-py3
+#FROM tensorflow/tensorflow:1.5.1-devel-gpu-py3
 # tags like:
 #   1.7.0-devel-gpu-py3
 #   1.7.0-devel-py3
 ## from ubuntu
-FROM ubuntu_tf:v1
+FROM ubuntu_tf:v2.3
 
 ### expose port
 EXPOSE 8888 8887 8886
@@ -76,6 +76,11 @@ COPY gitconfig ./.gitconfig
 COPY inputrc ./.inputrc
 RUN echo "#bash don't lock screen with control-s" >> ~/.bashrc && \
 echo "stty -ixon" >> ~/.bashrc
+
+### others
+RUN apt-get update && apt-get install -y libsndfile1
+RUN pip install librosa python_speech_features soundfile scipy jupyter pyyaml pandas pydub
+RUN ln -s /usr/bin/python3 /usr/bin/python
 
 ### copy setting to jason
 RUN cp -r /root/. /home/jason && \
