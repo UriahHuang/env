@@ -78,7 +78,7 @@ RUN echo "#bash don't lock screen with control-s" >> ~/.bashrc && \
 echo "stty -ixon" >> ~/.bashrc
 
 ### others
-RUN apt-get update && apt-get install -y libsndfile1
+RUN apt-get update && apt-get install -y libsndfile1 ffmpeg
 RUN pip install librosa python_speech_features soundfile scipy jupyter pyyaml pandas pydub
 RUN ln -s /usr/bin/python3 /usr/bin/python
 
